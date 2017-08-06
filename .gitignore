@@ -1,0 +1,10 @@
+# Node moduli:
+node_modules/
+# Logovi:
+logs
+*.log
+*.log??
+npm-debug.log*
+# Drugi folderi:
+public
+dist

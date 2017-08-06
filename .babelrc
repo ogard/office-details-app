@@ -1,0 +1,67 @@
+{
+  "presets": [
+    "react",
+    "stage-2",
+    "es2015"
+  ],
+  "passPerPreset": true,
+  "plugins" : [
+   "react-hot-loader/babel"
+  ],
+  "env": {
+    "development": {
+      "compact": false,
+      "plugins" : [
+        ["tcomb", {
+          "skipAsserts": false,
+          "globals": [
+            // flow
+            {
+              "Class": true,
+              "$Exact": true,
+              "$ReadOnlyArray": true,
+              "$PropertyType": true
+            },
+            // dom
+            {
+              "KeyboardEvent": true
+            },
+            // react
+            {
+              "SyntheticEvent": true,
+              "React$Element": true
+            }
+          ]
+        }],
+        "transform-react-jsx-source",
+        "transform-react-jsx-self"
+      ]
+    },
+    "production": {
+      "plugins" : [
+        ["tcomb", {
+          "skipAsserts": true,
+          "globals": [
+            // flow
+            {
+              "Class": true,
+              "$Exact": true,
+              "$ReadOnlyArray": true,
+              "$PropertyType": true
+            },
+            // dom
+            {
+              "KeyboardEvent": true
+            },
+            // react
+            {
+              "SyntheticEvent": true,
+              "React$Element": true
+            }
+          ]
+        }],
+        "jsx-remove-data-test-id"
+      ]
+    }
+  }
+}

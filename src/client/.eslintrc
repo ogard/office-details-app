@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "flowtype/require-valid-file-annotation": [2, "always"]
+  },
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": false
+    }
+  }
+}

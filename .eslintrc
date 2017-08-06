@@ -1,0 +1,77 @@
+{
+  "extends": "eslint-config-airbnb",
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "no-unused-vars": ["error", { "vars": "local", "args": "after-used", "argsIgnorePattern": "^_", "varsIgnorePattern": "^_"  }],
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "max-len": ["error", 150],
+    "no-tabs": 1,
+    "class-methods-use-this": 0, // TODO: vezano za klase, nije neophodno, proceni ponovo
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "comma-dangle": ["error", {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "always-multiline"
+    }],
+    "prefer-destructuring": 0, // TODO: vrati pravilo kad se resi: https://github.com/eslint/eslint/issues/7886
+    "no-unneeded-ternary": 2,
+    "object-property-newline": 2,
+    "arrow-parens": ["error", "as-needed"],
+    "no-duplicate-imports": 0, // TODO: vrati pravilo kad se resi: https://github.com/babel/eslint-plugin-babel/issues/59, za sada zamena "import/no-duplicates"
+    "no-prototype-builtins": 0,
+    "object-curly-spacing": 0, // ukljucen babel/object-curly-spacing
+    "react/sort-comp": ["error", {
+      "order": [
+        "type-annotations",
+        "static-methods",
+        "lifecycle",
+        "/^on.+$/",
+        "/^(get|set)(?!(InitialState$|DefaultProps$|ChildContext$)).+$/",
+        "everything-else",
+        "/^render.+$/",
+        "render"
+      ]
+    }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
+    "react/no-unused-prop-types": 0, // TODO: izbrisati kada se resi https://github.com/yannickcr/eslint-plugin-react/issues/1032
+    "react/prop-types": 0, // TODO: izbrisati kada se resi https://github.com/yannickcr/eslint-plugin-react/issues/1032
+    "react/jsx-boolean-value": [2, "always"], // TODO: vrati na default "never", ako se resi https://github.com/facebook/flow/issues/3026
+    "react/require-default-props": 0, // TODO: razmotri prema https://github.com/yannickcr/eslint-plugin-react/issues/1184
+    "import/no-duplicates": 2,
+    "import/prefer-default-export": 0,
+    "import/extensions": 2,
+    "import/no-named-as-default-member": 0, // TODO: proveri
+    "jsx-a11y/label-has-for": 0, // TODO: shvati cemu sluzi pa potencijalno vrati
+    "jsx-a11y/no-static-element-interactions": 0,
+    "flowtype/define-flow-type": 1,
+    "flowtype/use-flow-type": 1,
+    "flowtype/boolean-style": 2,
+    "flowtype/delimiter-dangle": [2, "always-multiline"],
+    "flowtype/no-dupe-keys": 2,
+    "flowtype/semi": 2,
+    "flowtype/space-after-type-colon": 2,
+    "flowtype/space-before-generic-bracket": 2,
+    "flowtype/space-before-type-colon": 2,
+    "flowtype/type-id-match": [2, "^([A-Z][a-z0-9]+)"],
+    "flowtype/valid-syntax": 2,
+    "flowtype/union-intersection-spacing": 2,
+    "babel/object-curly-spacing": [2, "always"],
+    "babel/flow-object-type": [2, "comma"],
+    "linebreak-style": ["error", "windows"] // TODO: kada razvijam na linux-u onda treba: linebreak-style: ["error", "unix"]
+  },
+  "plugins": ["react", "flowtype", "babel"],
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": true
+    }
+  },
+  "globals": {
+    "APP_VERSION": false
+  }
+}

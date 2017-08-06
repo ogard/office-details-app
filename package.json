@@ -1,0 +1,120 @@
+{
+  "name": "office-details",
+  "version": "0.0.0",
+  "description": "Company which has offices around the inform potencial customers about office locations and contact details",
+  "scripts": {
+    "start": "node server.js",
+    "lint": "eslint ./src",
+    "lint-staged": "lint-staged",
+    "flow": "./node_modules/.bin/flow",
+    "test": "cross-env NODE_ENV=test mocha --recursive --compilers js:babel-register",
+    "test:watch": "npm test -- --watch"
+  },
+  "pre-commit": [
+    "npm run lint-staged",
+    "npm run flow"
+  ],
+  "lint-staged": {
+    "*.js": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ogard/js-frontend-projects"
+  },
+  "author": "Drago Odalovic",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ogard/js-frontend-projects"
+  },
+  "devDependencies": {
+    "anybar-webpack": "^1.2.0",
+    "autoprefixer": "^6.3.6",
+    "babel-core": "^6.22.1",
+    "babel-eslint": "^7.1.0",
+    "babel-loader": "^6.2.7",
+    "babel-plugin-tcomb": "^0.3.24",
+    "babel-plugin-transform-react-jsx-self": "^6.22.0",
+    "babel-plugin-transform-react-jsx-source": "^6.22.0",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-env": "^1.1.8",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.23.0",
+    "babel-preset-stage-2": "^6.18.0",
+    "chance": "^1.0.4",
+    "copy-webpack-plugin": "4.0.1",
+    "cross-env": "^1.0.8",
+    "css-loader": "^0.23.1",
+    "enzyme": "^2.7.0",
+    "eslint": "^3.10.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-flowtype": "^2.18.2",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^5.0.1",
+    "eslint-plugin-react": "^7.0.1",
+    "expect": "^1.20.2",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "flow-bin": "^0.52.0",
+    "html-webpack-plugin": "^2.22.0",
+    "image-webpack-loader": "^2.0.0",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
+    "lint-staged": "^3.2.4",
+    "mocha": "^3.1.0",
+    "nodemon": "^1.9.1",
+    "node-libs-browser": "^1.0.0",
+    "npm-run-all": "^1.7.0",
+    "pre-commit": "^1.2.2",
+    "pre-git": "^3.10.0",
+    "react-addons-perf": "^15.4.2",
+    "react-addons-test-utils": "^15.4.1",
+    "react-hot-loader": "^3.0.0-beta.3",
+    "react-json-tree": "^0.10.0",
+    "react-test-renderer": ">=15.4.1 <15.5",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.2",
+    "webpack-dashboard": "^0.1.6",
+    "webpack-dev-middleware": "^1.8.3",
+    "webpack-hot-middleware": "^2.12.2"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "classnames": "^2.2.5",
+    "express": "^4.14.0",
+    "lodash": "^4.14.1",
+    "log4js": "^0.6.37",
+    "material-ui": "^0.16.0",
+    "moment": "^2.14.1",
+    "rc-tabs": "^7.1.0",
+    "react": "^15.4.2",
+    "react-addons-shallow-compare": "^15.4.1",
+    "react-dom": "^15.4.2",
+    "react-intl": "^2.1.3",
+    "react-loader": "^2.4.0",
+    "react-tap-event-plugin": "^2.0.0",
+    "react-redux": "^4.4.5",
+    "redux": "^3.6.0",
+    "redux-elmish": "^0.2.0",
+    "tcomb": "^3.2.13",
+    "tcomb-form": "^0.9.13",
+    "tcomb-form-templates-bootstrap": "^0.2.2",
+    "tcomb-from-json": "https://github.com/minedeljkovic/tcomb/tarball/bbb80d7ea795e24e5f28f6943289df087237da85",
+    "tcomb-validation": "^3.2.2"
+  },
+  "config": {
+    "pre-git": {
+      "pre-commit": [],
+      "pre-push": [
+        "npm run flow"
+      ],
+      "post-commit": [],
+      "post-checkout": [],
+      "post-merge": []
+    }
+  },
+  "release": {
+    "analyzeCommits": "simple-commit-message"
+  }
+}

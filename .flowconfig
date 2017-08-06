@@ -1,0 +1,21 @@
+[libs]
+./flow-interfaces/
+
+[ignore]
+.*node_modules/fbjs.*
+.*node_modules/findup.*
+.*node_modules/react-virtual-scroller.*
+.*node_modules/eslint-plugin-jsx-a11y.*
+.*node_modules/react-tap-event-plugin.*
+.*node_modules/react-event-listener.*
+
+[options]
+module.name_mapper='.*\(.css\)' -> 'CSSModule'
+module.system=haste
+esproposal.class_instance_fields=enable
+suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
+suppress_comment= \\(.\\|\n\\)*\\$FlowIssue
+experimental.const_params=true
+
+[version]
+^0.52.0
