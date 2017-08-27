@@ -3,11 +3,13 @@
 import React from 'react';
 import { Effects } from 'redux-elmish';
 import type { Effect, Dispatch } from 'redux-elmish';
-import Avatar from 'material-ui/Avatar';
-import { List, ListItem } from 'material-ui/List';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import Loader from 'react-loader';
-import * as Api from './api';
+
+import * as List from '../list';
+import * as Grid from '../grid';
+import * as Map from '../map';
+import * as Fetch from '../common/fetch';
 
 type PageTab = '1' | '2' | '3';
 /* eslint-disable quote-props */
@@ -19,13 +21,13 @@ const tabName = {
 /* eslint-enable quote-props */
 
 type Model = {
-  data: ?Api.Result,
+  data: ?Fetch.Result,
   loading: boolean,
   selectedTab: PageTab,
 };
 
 type Action =
-  | { type: 'ReceiveData', data: Api.Result }
+  | { type: 'ReceiveData', data: Fetch.Result }
   | { type: 'FailData', error: any }
   | { type: 'ChangeTab', tab: PageTab }
 ;
@@ -33,7 +35,7 @@ type Action =
 const init = (): [Model, Effect<Action>] => ([
   { data: null, loading: true, selectedTab: '1' },
   Effects.promise(
-    () => Api.getData(),
+    () => Fetch.getData(),
     result => ({ type: 'ReceiveData', data: result }),
     error => ({ type: 'FailData', error }),
   ),
@@ -58,23 +60,23 @@ const update = (model: Model, action: Action) => {
   }
 };
 
-const renderListData = (data: Api.Result): React$Element<any> => (
-  <List>
-    {data.map(el => (
-      <ListItem
-        key={el.id}
-        primaryText={el.name}
-        secondaryText={el.description}
-        leftAvatar={el.photo != null ? <Avatar src={el.photo} /> : <Avatar>{el.description[0]}</Avatar>}
-      />
-    ))}
-  </List>
-);
-
 type Props = {
   model: Model,
   dispatch: Dispatch<Action>,
 };
+
+// const testData = [{
+//   id: 2,
+//   name: 'Paris Office',
+//   description: 'Itekako Paris office address is Main street',
+//   latitude: '48.856614',
+//   longitude: '2.3522219',
+//   photo: null,
+// }];
+
+const ListView = List.View;
+const GridView = Grid.View;
+const MapView = Map.View;
 const View = ({ model, dispatch }: Props) => (
   <div>
     {model.loading &&
@@ -87,10 +89,14 @@ const View = ({ model, dispatch }: Props) => (
       onSelect={tab => dispatch({ type: 'ChangeTab', tab })}
     >
       <Tab label={tabName[1]}>
-        {model.data != null && renderListData(model.data)}
+        {model.data != null && <ListView data={model.data} />}
       </Tab>
-      <Tab label={tabName[2]} />
-      <Tab label={tabName[3]} disabled={true} />
+      <Tab label={tabName[2]}>
+        {model.data != null && <GridView data={model.data} />}
+      </Tab>
+      <Tab label={tabName[3]}>
+        {model.data != null && <MapView data={model.data} />}
+      </Tab>
     </Tabs>
   </div>
 );

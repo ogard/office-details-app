@@ -1,7 +1,7 @@
 // @flow
 
 import type { $Reify } from 'tcomb';
-import * as CommonApi from '../common/api';
+import * as CommonApi from '../api';
 
 export type Preview = {
   id: number,
