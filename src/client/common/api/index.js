@@ -1,6 +1,6 @@
 /* eslint-disable flowtype/require-valid-file-annotation */
 
-import fromJSON from 'tcomb-from-json/lib/fromJSON';
+import fromJSON from 'tcomb/lib/fromJSON';
 
 const checkStatus = response => {
   const { status } = response;

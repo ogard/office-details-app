@@ -101,7 +101,6 @@
     "tcomb": "^3.2.13",
     "tcomb-form": "^0.9.13",
     "tcomb-form-templates-bootstrap": "^0.2.2",
-    "tcomb-from-json": "https://github.com/minedeljkovic/tcomb/tarball/bbb80d7ea795e24e5f28f6943289df087237da85",
     "tcomb-validation": "^3.2.2"
   },
   "config": {

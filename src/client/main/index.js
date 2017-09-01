@@ -4,13 +4,12 @@ import React from 'react';
 import { Effects } from 'redux-elmish';
 import type { Effect, Dispatch } from 'redux-elmish';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import Loader from 'react-loader';
 
 import * as List from '../list';
 import * as Grid from '../grid';
 import * as Map from '../map';
-import * as Fetch from '../common/fetch';
 
+// MODEL
 type PageTab = '1' | '2' | '3';
 /* eslint-disable quote-props */
 const tabName = {
@@ -21,41 +20,61 @@ const tabName = {
 /* eslint-enable quote-props */
 
 type Model = {
-  data: ?Fetch.Result,
-  loading: boolean,
   selectedTab: PageTab,
+  lista: List.Model,
+  mreza: Grid.Model,
+  mapa: Map.Model,
 };
 
+// UPDATE
 type Action =
-  | { type: 'ReceiveData', data: Fetch.Result }
-  | { type: 'FailData', error: any }
   | { type: 'ChangeTab', tab: PageTab }
+  | { type: 'Lista', subAction: List.Action }
+  | { type: 'Mreza', subAction: Grid.Action }
+  | { type: 'Mapa', subAction: Map.Action }
 ;
 
-const init = (): [Model, Effect<Action>] => ([
-  { data: null, loading: true, selectedTab: '1' },
-  Effects.promise(
-    () => Fetch.getData(),
-    result => ({ type: 'ReceiveData', data: result }),
-    error => ({ type: 'FailData', error }),
-  ),
-]);
+const init = (): [Model, Effect<Action>] => {
+  const [lista, listaFx] = List.init();
+  const [mreza, mrezaFx] = Grid.init();
+  const [mapa, mapaFx] = Map.init();
+  return [
+    { selectedTab: '1', lista, mreza, mapa },
+    Effects.batch([
+      Effects.map(listaFx, subAction => ({ type: 'Lista', subAction })),
+      Effects.map(mrezaFx, subAction => ({ type: 'Mreza', subAction })),
+      Effects.map(mapaFx, subAction => ({ type: 'Mapa', subAction })),
+    ]),
+  ];
+};
 
 const update = (model: Model, action: Action) => {
   switch (action.type) {
-    case 'ReceiveData': return [
-      { ...model, data: action.data, loading: false },
-      Effects.none(),
-    ];
-    // TODO: notifikacija za gresku na serveru
-    case 'FailData': return console.error(action.error) || [
-      { ...model, data: null, loading: false },
-      Effects.none(),
-    ];
     case 'ChangeTab': return [
       { ...model, selectedTab: action.tab },
       Effects.none(),
     ];
+    case 'Lista': {
+      const [newListaModel, newListaFx] = List.update(model.lista, action.subAction);
+      return [
+        { ...model, lista: newListaModel },
+        Effects.batch([newListaFx]),
+      ];
+    }
+    case 'Mreza': {
+      const [newMrezaModel, newMrezaFx] = Grid.update(model.mreza, action.subAction);
+      return [
+        { ...model, mreza: newMrezaModel },
+        Effects.batch([newMrezaFx]),
+      ];
+    }
+    case 'Mapa': {
+      const [newMapaModel, newMapaFx] = Map.update(model.mapa, action.subAction);
+      return [
+        { ...model, mapa: newMapaModel },
+        Effects.batch([newMapaFx]),
+      ];
+    }
     default: return [model, Effects.none()];
   }
 };
@@ -65,37 +84,32 @@ type Props = {
   dispatch: Dispatch<Action>,
 };
 
-// const testData = [{
-//   id: 2,
-//   name: 'Paris Office',
-//   description: 'Itekako Paris office address is Main street',
-//   latitude: '48.856614',
-//   longitude: '2.3522219',
-//   photo: null,
-// }];
-
 const ListView = List.View;
 const GridView = Grid.View;
 const MapView = Map.View;
 const View = ({ model, dispatch }: Props) => (
   <div>
-    {model.loading &&
-      <div className="loaderWithMask">
-        <Loader loaded={!model.loading} />
-      </div>
-    }
     <Tabs
       id="tabContainer"
       onSelect={tab => dispatch({ type: 'ChangeTab', tab })}
     >
       <Tab label={tabName[1]}>
-        {model.data != null && <ListView data={model.data} />}
+        <ListView
+          model={model.lista}
+          dispatch={subAction => dispatch({ type: 'Lista', subAction })}
+        />
       </Tab>
       <Tab label={tabName[2]}>
-        {model.data != null && <GridView data={model.data} />}
+        <GridView
+          model={model.mreza}
+          dispatch={subAction => dispatch({ type: 'Mreza', subAction })}
+        />
       </Tab>
       <Tab label={tabName[3]}>
-        {model.data != null && <MapView data={model.data} />}
+        <MapView
+          model={model.mapa}
+          dispatch={subAction => dispatch({ type: 'Mapa', subAction })}
+        />
       </Tab>
     </Tabs>
   </div>
